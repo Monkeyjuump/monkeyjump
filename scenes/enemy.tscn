@@ -1,0 +1,123 @@
+[gd_scene load_steps=13 format=3 uid="uid://ej3ch3gkxeqm"]
+
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_7dk4i"]
+[ext_resource type="Texture2D" path="res://assets/platform/tile_0024.png" id="2_8yvfi"]
+[ext_resource type="Texture2D" path="res://assets/platform/tile_0025.png" id="3_gwwli"]
+[ext_resource type="Texture2D" path="res://assets/platform/tile_0026.png" id="4_t5sb1"]
+
+[sub_resource type="Curve2D" id="Curve2D_rdnjn"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67.9217, 0)
+}
+point_count = 2
+
+[sub_resource type="GDScript" id="GDScript_ss6fd"]
+script/source = "extends AnimatableBody2D
+
+@export var jump_power = 0 
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lr8hd"]
+size = Vector2(23.625, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mb15p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8yvfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gwwli")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t5sb1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwbgt"]
+size = Vector2(23.625, 17)
+
+[sub_resource type="Animation" id="Animation_seg6w"]
+length = 2.0
+loop_mode = 2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_dbx4o"]
+resource_name = "move"
+length = 4.0
+loop_mode = 2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2, 4)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n4tjo"]
+_data = {
+"RESET": SubResource("Animation_seg6w"),
+"move": SubResource("Animation_dbx4o")
+}
+
+[node name="enemy" type="Path2D"]
+position = Vector2(-54, 1)
+scale = Vector2(1.3545, 1)
+curve = SubResource("Curve2D_rdnjn")
+script = ExtResource("1_7dk4i")
+metadata/_edit_group_ = true
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(67.9217, 0)
+progress = 67.9217
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="PathFollow2D"]
+remote_path = NodePath("../../AnimatableBody2D")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." groups=["enemy"]]
+position = Vector2(67.9217, 0)
+collision_layer = 2
+collision_mask = 0
+script = SubResource("GDScript_ss6fd")
+
+[node name="Area2D" type="Area2D" parent="AnimatableBody2D" groups=["enemy"]]
+position = Vector2(-5.72205e-06, 0)
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Area2D"]
+position = Vector2(3.8147e-05, 0.499995)
+scale = Vector2(1, 0.999999)
+shape = SubResource("RectangleShape2D_lr8hd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatableBody2D"]
+sprite_frames = SubResource("SpriteFrames_mb15p")
+frame = 2
+frame_progress = 0.490484
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_rwbgt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_n4tjo")
+}
+
+[connection signal="body_entered" from="AnimatableBody2D/Area2D" to="." method="_on_area_2d_body_entered"]

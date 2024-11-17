@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://4uf7de0c0pjj"]
+
+[ext_resource type="Script" path="res://scenes/doodle_jump.gd" id="1_3qxhm"]
+[ext_resource type="PackedScene" path="res://scenes/platform.tscn" id="2_7h1i5"]
+[ext_resource type="PackedScene" path="res://scenes/spirng_platform.tscn" id="3_bwfik"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="4_d7y6i"]
+[ext_resource type="PackedScene" path="res://scenes/cloud_platform.tscn" id="5_2j4ec"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="6_k7ueb"]
+[ext_resource type="PackedScene" path="res://scenes/control.tscn" id="7_7c16r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iw0os"]
+size = Vector2(330, 53)
+
+[node name="doodle_jump" type="Node2D"]
+script = ExtResource("1_3qxhm")
+scene_platform = [ExtResource("2_7h1i5"), ExtResource("3_bwfik"), ExtResource("4_d7y6i"), ExtResource("5_2j4ec")]
+
+[node name="platform_container" type="Node2D" parent="."]
+
+[node name="platform" parent="platform_container" instance=ExtResource("2_7h1i5")]
+position = Vector2(92, 301)
+
+[node name="player" parent="." instance=ExtResource("6_k7ueb")]
+position = Vector2(90, 160)
+
+[node name="Control" parent="player" instance=ExtResource("7_7c16r")]
+offset_left = -91.0
+offset_top = -160.0
+offset_right = -91.0
+offset_bottom = -160.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(90, 160)
+ignore_rotation = false
+metadata/scene_platform = [ExtResource("2_7h1i5"), ExtResource("3_bwfik"), ExtResource("5_2j4ec")]
+
+[node name="platform_eraser" type="Area2D" parent="Camera2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/platform_eraser"]
+position = Vector2(1, 221)
+shape = SubResource("RectangleShape2D_iw0os")
+
+[node name="score" type="Label" parent="Camera2D"]
+offset_left = -90.0
+offset_top = -142.0
+offset_right = 90.0
+offset_bottom = -119.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="Camera2D/platform_eraser" to="." method="_on_platform_eraser_body_entered"]

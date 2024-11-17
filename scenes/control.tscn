@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0lj03kcc5x7t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wf17s"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="right" type="TouchScreenButton" parent="."]
+position = Vector2(135, 160)
+scale = Vector2(4.5, 16)
+shape = SubResource("RectangleShape2D_wf17s")
+passby_press = true
+action = "ui_right"
+
+[node name="left" type="TouchScreenButton" parent="."]
+position = Vector2(45, 160)
+scale = Vector2(4.5, 16)
+shape = SubResource("RectangleShape2D_wf17s")
+passby_press = true
+action = "ui_left"

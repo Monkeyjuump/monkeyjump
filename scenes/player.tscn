@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://crqbqyw0qnqx1"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_afx2w"]
+[ext_resource type="Texture2D" path="res://assets/char/monkey1-02.png" id="2_w8xfh"]
+[ext_resource type="Texture2D" path="res://assets/char/monkey1-01.png" id="3_giiha"]
+[ext_resource type="Texture2D" path="res://assets/char/monkey1-03.png" id="4_vj252"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hltro"]
+size = Vector2(21, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ndsr4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_w8xfh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_giiha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vj252")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 2.0
+}]
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
+position = Vector2(1, 1)
+collision_layer = 7
+script = ExtResource("1_afx2w")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_hltro")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("SpriteFrames_ndsr4")
+frame_progress = 0.374511

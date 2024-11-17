@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://btx4id6ikyxc2"]
+
+[ext_resource type="Script" path="res://scenes/platform.gd" id="1_4txe1"]
+[ext_resource type="Texture2D" path="res://assets/platform/dahan-01.png" id="2_wuble"]
+[ext_resource type="Texture2D" path="res://assets/platform/dahan-02.png" id="3_o8uvj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mkegr"]
+size = Vector2(36, 9)
+
+[node name="platform" type="StaticBody2D" groups=["platform"]]
+script = ExtResource("1_4txe1")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-9, 0)
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("2_wuble")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(9, -1.78814e-07)
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_o8uvj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_mkegr")
+one_way_collision = true

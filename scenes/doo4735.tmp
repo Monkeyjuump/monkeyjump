@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvhbev0alvpiq"]
+
+[ext_resource type="PackedScene" uid="uid://7hoqbprgw5rc" path="res://scenes/player.tscn" id="1_alfhr"]
+[ext_resource type="Script" path="res://scenes/doodle_jump.gd" id="1_i7cxf"]
+[ext_resource type="PackedScene" uid="uid://bfr351jhah2ja" path="res://scenes/platform.tscn" id="2_lj6qj"]
+
+[node name="doodle_jump" type="Node2D"]
+script = ExtResource("1_i7cxf")
+scene_platform = ExtResource("2_lj6qj")
+
+[node name="player" parent="." instance=ExtResource("1_alfhr")]
+position = Vector2(90, 160)
+
+[node name="platform_container" type="Node2D" parent="."]
+
+[node name="platform" parent="platform_container" instance=ExtResource("2_lj6qj")]
+position = Vector2(90, 300)

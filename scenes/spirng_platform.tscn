@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpe3bpvlvwkww"]
+
+[ext_resource type="Script" path="res://scenes/spirng_platform.gd" id="1_ghy6p"]
+[ext_resource type="Texture2D" path="res://assets/platform/dahan-01-03.png" id="2_yqf6o"]
+[ext_resource type="Texture2D" path="res://assets/platform/dahan-01-04.png" id="3_wfitx"]
+[ext_resource type="Texture2D" path="res://assets/platform/dahan-01-05.png" id="4_e61lb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m8hlk"]
+size = Vector2(18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cmm6f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_wfitx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_e61lb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wfitx")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="spirng_platform" type="StaticBody2D" groups=["platform"]]
+collision_mask = 0
+script = ExtResource("1_ghy6p")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("2_yqf6o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_m8hlk")
+one_way_collision = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -18)
+scale = Vector2(0.24, 0.24)
+sprite_frames = SubResource("SpriteFrames_cmm6f")
+frame = 2
+frame_progress = 1.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
